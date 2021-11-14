@@ -15,6 +15,12 @@ class Seed extends CI_Controller
 				'description' => 'General User'
 			]
         ]);
+        
+		$this->db->insert_batch('code_access', [
+            [
+				'token'        => ''
+			]
+        ]);
     }
 
             

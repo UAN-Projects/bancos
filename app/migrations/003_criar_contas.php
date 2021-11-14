@@ -18,12 +18,9 @@ class Migration_Criar_contas extends CI_Migration {
                 'type' => 'INT',
                 'unsigned' => TRUE,
             ),
-			'numero' => array(
+			'conta_numero' => array(
                 'type' => 'INT',
-                'unsigned' => TRUE,
-            ),
-			'banco_numero' => array(
-                'type' => 'INT',
+				'constraint' => '3',
                 'unsigned' => TRUE,
             ),
 			'conta' => [
@@ -37,18 +34,11 @@ class Migration_Criar_contas extends CI_Migration {
 				'constraint' => '10,2',
 				'default' => 0.00
 			),
-			'token' => [
-				'type'       => 'VARCHAR',
-				'constraint' => '254',
-				'unique' 	 => TRUE,
-				'null'       => TRUE
-			],
 			'created_at datetime default current_timestamp',
             'updated_at datetime on update current_timestamp'
 		]);
 		$this->dbforge->add_key('id', TRUE);
-		$this->dbforge->add_field("CONSTRAINT CHECK (numero < 10)");
-		$this->dbforge->add_field('CONSTRAINT UNIQUE (numero, banco_numero) ');
+		$this->dbforge->add_field('CONSTRAINT UNIQUE (conta_numero, banco_id) ');
 		$this->dbforge->create_table('contas');
 	}
 

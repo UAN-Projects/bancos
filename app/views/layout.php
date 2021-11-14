@@ -61,11 +61,10 @@
                               <i class="remixicon-account-circle-line"></i>
                               <span>Perfil</span>
                           </a>
-                          <a href="<?= base_url('user/generateToken'); ?>" class="dropdown-item notify-item">
+                          <a href="<?= base_url('basecontroller/generateToken'); ?>" class="dropdown-item notify-item">
                               <i class="remixicon-account-circle-line"></i>
                               <span>Gerer Token</span>
                           </a>
-
                           <div class="dropdown-divider"></div>
 
                           <!-- item-->
@@ -101,7 +100,8 @@
               <div id="navigation">
                   <!-- Navigation Menu-->
                   <ul class="navigation-menu">
-
+                  
+                  <?php if(!$isAdmin) { ?>
                     <li class="has-submenu">
                         <a href="#">
                             <i class="remixicon-stack-line"></i>Configurações <div class="arrow-down"></div>
@@ -120,6 +120,7 @@
                             </li>
                         </ul>
                     </li>
+                  <?php } ?>
 
                       <li class="has-submenu">
                             <a href="<?= base_url(); ?>">
@@ -134,6 +135,9 @@
                           <ul class="submenu">
                               <li>
                                   <a href="<?= base_url('banco'); ?>"> Bancos </a>
+                              </li>
+                              <li>
+                                  <a href="<?= base_url('conta'); ?>"> Contas </a>
                               </li>
                           </ul>
                       </li>

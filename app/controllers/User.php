@@ -1,15 +1,15 @@
 <?php defined('BASEPATH') or exit('Acção não permitida');
 
-class User extends CI_Controller
+require('BaseController.php');
+
+class User extends BaseController
 {
     protected $table;
-    protected $data = [];
 
     public function __construct() {
         parent::__construct();
         if(!$this->ion_auth->logged_in()) redirect();
         if(!$this->ion_auth->is_admin()) redirect();
-        $this->load->model('Core_model');
         $this->data['class'] = strtolower(__CLASS__);
         $this->table = 'users';
     }

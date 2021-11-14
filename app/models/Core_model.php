@@ -12,6 +12,14 @@ class Core_model extends CI_Model {
             return FALSE;
         }
     }
+    public function gets($select = NULL, $tabela = NULL, $join = NULL, $condicao = NULL) {
+        $this->db->select($select);
+        $this->db->from($tabela);
+        foreach ($join as $key => $value) $this->db->join($key, $value);
+        if(is_array($condicao)) $this->db->where($condicao);
+        $query = $this->db->get()->result();
+        return ($query)? $query : FALSE;
+    }
 
     public function getById($tabela = NULL, $id = NULL) {
         if ($tabela && $id) {
@@ -90,7 +98,15 @@ class Core_model extends CI_Model {
         $this->db->select('numero');
         $this->db->order_by('numero', 'DESC');
         $this->db->limit(1);
-        $numero = $this->db->get('bancos')->row()->numero;
-        return ($numero)? $numero + 1 : 0;
+        $banco = $this->db->get('bancos')->row();
+        return ($banco)? $banco->numero + 1 : 0;
+    }
+    
+    public function generateAccountNumber($bank_id) {
+        $this->db->where(array('banco_id' => $bank_id));
+        $this->db->order_by('conta_numero', 'DESC');
+        $this->db->limit(1);
+        $conta = $this->db->get('contas')->row();
+        return ($conta)? $conta->conta_numero + 1 : 1;
     }
 }

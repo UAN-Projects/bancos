@@ -2,7 +2,7 @@
 
 require('BaseController.php');
 
-class Banco extends BaseController
+class Conta extends BaseController
 {
     protected $table;
 
@@ -10,19 +10,19 @@ class Banco extends BaseController
         parent::__construct();
         if(!$this->ion_auth->logged_in()) redirect();
         $this->data['class'] = strtolower(__CLASS__);
-        $this->table = 'bancos';
+        $this->table = 'contas';
     }
 
     public function index()
     {
         $this->data['method'] = __FUNCTION__;
-        $this->form_validation->set_rules('nome', 'Nome', 'required|is_unique[bancos.nome]');
-        $this->form_validation->set_rules('sigla', 'Sigla', 'required|is_unique[bancos.sigla]');
-        $this->form_validation->set_rules('admin', 'Administrador', 'required');
+        $this->form_validation->set_rules('user_id', 'Utilizador', 'required');
+        $this->form_validation->set_rules('banco_id', 'Banco', 'required');
 
         if ($this->form_validation->run()) {
-            $insert_data = elements(array('nome', 'sigla', 'admin'), $this->security->xss_clean($this->input->post()));
-            $insert_data['numero'] = $this->Core_model->getNumberBank();
+            $insert_data = elements(array('user_id', 'banco_id'), $this->security->xss_clean($this->input->post()));
+            $insert_data['conta_numero'] = $this->Core_model->generateAccountNumber($insert_data['banco_id']);
+            $insert_data['conta'] = $insert_data['banco_id'].str_pad($insert_data['conta_numero'], 3, '0', STR_PAD_LEFT);
 
             $insertedId = $this->Core_model->insert($this->table, $insert_data);
             if ($insertedId) {
@@ -32,8 +32,15 @@ class Banco extends BaseController
                 $this->session->set_tempdata('notify', __CLASS__.",error, Erro!", 1);
             }
         }
-        $this->data['items'] = $this->Core_model->get($this->table);
+        // $this->data['items'] = $this->Core_model->get($this->table);
+        $this->data['items'] = $this->Core_model->gets('*', 'bancos', 
+            array(
+                'contas' => 'bancos.id = contas.banco_id',
+                'users' => 'users.id = contas.user_id'
+            )
+        );
         $this->data['users'] = array_column( $this->ion_auth->users()->result(), 'username', 'id');
+        $this->data['bancos'] = array_column( $this->Core_model->get('bancos'), 'nome', 'id');
         $this->load->view('layout', $this->data);
     }
 

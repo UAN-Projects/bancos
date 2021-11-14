@@ -1,6 +1,8 @@
 <?php defined('BASEPATH') OR exit('Acção não permitida');
 
-class Auth extends CI_Controller {
+require('BaseController.php');
+
+class Auth extends BaseController {
 
     public function index() {
         if($this->ion_auth->logged_in()) redirect('dashboard');
