@@ -16,6 +16,11 @@ class Migration_Criar_authenticate_app extends CI_Migration {
 				'unique' 	 => TRUE,
 				'null'       => TRUE
 			],
+			'code' => [
+				'type'       => 'VARCHAR',
+				'constraint' => '254',
+				'default' => 'something'
+			],
 			'created_at datetime default current_timestamp',
             'updated_at datetime on update current_timestamp'
 		]);

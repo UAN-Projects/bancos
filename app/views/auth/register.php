@@ -5,7 +5,7 @@
             
             <div class="text-center w-75 m-auto">
                 <a href="index.html">
-                    <span><img src="<?= base_url("assets/images/logo-light.png")?>" alt="" height="22"></span>
+                    <span> <h2> <?= $AppName?> </h2> </span>
                 </a>
                 <p class="text-muted mb-4 mt-3">Don't have an account? Create your own account, it takes less than a minute</p>
             </div>

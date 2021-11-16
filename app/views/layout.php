@@ -48,7 +48,6 @@
 
                   <li class="dropdown notification-list">
                       <a class="nav-link dropdown-toggle nav-user mr-0 waves-effect waves-light" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
-                          <img src="assets/images/users/avatar-1.jpg" alt="user-image" class="rounded-circle">
                           <span class="pro-user-name ml-1">
                               <?= $this->ion_auth->user()->row()->first_name; ?>
                                 <i class="mdi mdi-chevron-down"></i> 
@@ -61,7 +60,7 @@
                               <i class="remixicon-account-circle-line"></i>
                               <span>Perfil</span>
                           </a>
-                          <a href="<?= base_url('basecontroller/generateToken'); ?>" class="dropdown-item notify-item">
+                          <a href="<?= base_url('user/generateTokenApp'); ?>" class="dropdown-item notify-item">
                               <i class="remixicon-account-circle-line"></i>
                               <span>Gerer Token</span>
                           </a>
@@ -82,10 +81,10 @@
               <div class="logo-box">
                   <a href="<?= base_url(); ?>" class="logo text-center">
                       <span class="logo-lg">
-                          <img src="assets/images/logo-light.png" alt="" height="20">
+                          <h2> <?= $AppName?> </h2>
                       </span>
                       <span class="logo-sm">
-                          <img src="assets/images/logo-sm.png" alt="" height="24">
+                        <h2> <?= $AppName?> </h2>
                       </span>
                   </a>
               </div>

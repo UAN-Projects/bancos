@@ -109,4 +109,23 @@ class Core_model extends CI_Model {
         $conta = $this->db->get('contas')->row();
         return ($conta)? $conta->conta_numero + 1 : 1;
     }
+
+    public function getContas($condicao = NULL) {
+        $this->db->select('users.first_name, bancos.nome, contas.conta, contas.valor, contas.id, contas.created_at, contas.updated_at');
+        $this->db->from('bancos');
+        $this->db->join('contas', 'bancos.id = contas.banco_id');
+        $this->db->join('users', 'users.id = contas.user_id');
+        if(is_array($condicao)) return $this->db->where($condicao)->limit(1)->get()->row();
+        return $this->db->get()->result();
+    }
+
+    public function getMovimentosByConta($origem = NULL) {
+        $this->db->select('movimentos.conta_destino, users.first_name, bancos.nome, contas.conta, movimentos.valor, movimentos.id, contas.created_at');
+        $this->db->from('movimentos');
+        $this->db->join('contas', 'movimentos.conta_destino = contas.id');
+        $this->db->join('bancos', 'bancos.id = contas.banco_id');
+        $this->db->join('users', 'users.id = contas.user_id');
+        if(is_array($origem)) return $this->db->where(array('conta_origem' => $origem)); #->limit(1)->get()->row();
+        return $this->db->get()->result();
+    }
 }

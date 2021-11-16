@@ -28,20 +28,21 @@
             <div class="card-body">
                 <div class="row m-0 p-1">
                     <div class="col-sm-6">
-                        <strong>Nome : </strong> <?= $item->nome ?>
+                        <strong>Nome : </strong> <?= $item->first_name ?>
                     </div> <!-- end col -->
 
                     <div class="col-sm-6">
-                        <strong>Silga : </strong> <?= $item->sigla ?>
+                        <strong>Banco : </strong> <?= $item->nome ?>
                     </div> <!-- end col -->
                 </div> 
                 <div class="row m-0 p-1">
                     <div class="col-sm-6">
-                        <strong>Número : </strong> <?= $item->numero ?>
+                        <strong>Conta : </strong> <?= $item->conta ?>
                     </div> <!-- end col -->
 
                     <div class="col-sm-6">
-                        <strong>Administrador : </strong> <?= $this->ion_auth->user($item->id)->row()->first_name; ?>
+                        <strong>Montante : </strong> <?= $item->valor ?> Kz
+                        <!-- <strong>Administrador : </strong> <?#= $this->ion_auth->user($item->id)->row()->first_name; ?> -->
                     </div> <!-- end col -->
                 </div> 
             </div>
@@ -61,5 +62,53 @@
         </div> <!-- end card-box -->
     </div> <!-- end col -->
 </div>
+
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+
+                <table id="datatable-buttons" class="table table-striped dt-responsive nowrap">
+                    <thead>
+                        <tr>
+                            <th>Banco origem</th>
+                            <th>Nome origem</th>
+                            <th>Conta origem</th>
+                            <th>Montante</th>
+                            <th>Nome destino</th>
+                            <th>Conta destino</th>
+                            <th>Banco destino</th>
+                            <th>realizado em</th>
+                        </tr>
+                    </thead>
+                
+                
+                    <tbody>
+					<?php foreach ($movimentos as $movimento): ?>
+                        <tr>
+                            <td> <?= $item->nome?> </td>
+                            <td> <?= $item->first_name?> </td>
+                            <td> <?= $item->conta?> </td>
+                            <td> <?= $movimento->valor?> </td>
+                            <td> <?= $movimento->first_name?> </td>
+                            <td> <?= $movimento->conta?> </td>
+                            <td> <?= $movimento->nome?> </td>
+                            <td> <?= $movimento->created_at?> </td>
+                        </tr>
+					<?php endforeach;  ?>
+                    </tbody>
+                </table>
+                
+            </div> <!-- end card body-->
+        </div> <!-- end card -->
+    </div><!-- end col-->
+</div>
+<!-- end row-->
+
+
+<pre class="text-primary">
+    <?= print_r($movimentos) ?>
+</pre>
 
 <?php require('_edit.php'); ?>

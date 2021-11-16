@@ -32,13 +32,7 @@ class Conta extends BaseController
                 $this->session->set_tempdata('notify', __CLASS__.",error, Erro!", 1);
             }
         }
-        // $this->data['items'] = $this->Core_model->get($this->table);
-        $this->data['items'] = $this->Core_model->gets('*', 'bancos', 
-            array(
-                'contas' => 'bancos.id = contas.banco_id',
-                'users' => 'users.id = contas.user_id'
-            )
-        );
+        $this->data['items'] = $this->Core_model->getContas();
         $this->data['users'] = array_column( $this->ion_auth->users()->result(), 'username', 'id');
         $this->data['bancos'] = array_column( $this->Core_model->get('bancos'), 'nome', 'id');
         $this->load->view('layout', $this->data);
@@ -46,7 +40,8 @@ class Conta extends BaseController
 
 	public function show($id) {
         $this->data['method'] = __FUNCTION__;
-        $this->data['item'] = $this->Core_model->getById($this->table, $id);
+        $this->data['item'] = $this->Core_model->getContas(array('contas.id' => $id));
+        $this->data['movimentos'] = $this->Core_model->getMovimentosByConta($id);
         $this->load->view('layout', $this->data);
 	}
 

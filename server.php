@@ -5,98 +5,61 @@
         return new PDO('mysql:host=127.0.0.1:3307;dbname=larga_caixa', "edvaldo", "vander");
     }
 
-    function files($token) {
+    function movimentar($token, $origem, $destino, $valor) {
         $conn = conexao();
-        $stmt = $conn->prepare(
-          "SELECT ficheiros.descricao, ficheiros.preco, ficheiros.ficheiro, ficheiros.created_at
-          from ficheiros join users on ficheiros.user_id = users.id
-            WHERE users.token = :token");
-        $stmt->execute(array('token' => $token));
-        $ficheiros = $stmt->fetchAll();
-        $return = array();
-        
-        foreach ($ficheiros as $ficheiro) {
-            $return = array_merge($return, 
-                array(
-                    array( 
-                        'descricao' => $ficheiro['descricao'], 
-                        'preco' => $ficheiro['preco'],
-                        'ficheiro' => "http://{$_SERVER['HTTP_HOST']}/uploads/ficheiros/".$ficheiro['ficheiro'],
-                        'data' => $ficheiro['created_at'],
-                    ),
-                )
-            );
+        $return = 0;
+        $access = $conn->prepare("SELECT code_access.token FROM code_access WHERE code_access.token = :token")->execute(array('token' => $token))->fetch();
+        if($access) {
+            $conta_origem = $conn->prepare("SELECT * FROM contas WHERE contas.conta = :origem")->execute(array('origem' => $origem))->fetch();
+            $valor_actual = $conta_origem['valor'] - $valor;
+
+            if($valor_actual >= 0) {
+                $debito = $conn->prepare("UPDATE contas SET contas.valor = :valor WHERE contas.conta = :origem")->execute(array('valor' => $valor_actual, 'origem' => $origem));
+                if($debito) {
+                    $deposito = $conn->prepare("UPDATE contas SET contas.valor = :valor WHERE contas.conta = :destino")->execute(array('valor' => $valor, 'destino' => $destino));
+                    if($deposito) {
+                        $conta_origem = $conn->prepare("INSERT INTO movimentos (conta_origem, conta_destino, valor) VALUES (':conta_origem', ':conta_destino', ':valor')")
+                        ->execute(array('conta_origem' => $origem, 'conta_destino' => $destino, 'valor' => $valor));
+                        return $conn->lastInsertId();
+                    }
+                }
+            } 
         }
+        
         return $return;
     }
     
-    function getToken($username) {
+    function getToken($code) {
         $conn = conexao();
         $stmt = $conn->prepare(
-          "SELECT users.token FROM users WHERE users.username = :username ");
-        $stmt->execute(array('username' => $username));
+          "SELECT code_access.token FROM code_access WHERE code_access.code = :code ");
+        $stmt->execute(array('code' => $code));
 
         $user = $stmt->fetch();
-        if($user) {
-            // echo $user['token'];
-            return $user['token'];
-        } else {
-            // echo "Error ao tentar pegar o token!";
-            return "Error ao tentar pegar o token!";
-        }
-    }
-
-    function hello() {
-        return "Welcome back, Boss";
+        return ($user) ? $user['code'] : '';
     }
 
     $server = new soap_server();
     $ns = "http://{$_SERVER['HTTP_HOST']}/server.php";
-    $server->configureWSDL('Larga Caixa', $ns,'','document');
+    $server->configureWSDL('Bancos', $ns,'','document');
 
-    
-    $server->wsdl->addComplexType(
-        'file',
-        'complextType',
-        'struct',
-        'sequence',
-        '',
+    $server->register("movimentar",
         array(
-            'descricao' => array('name' => 'descricao', 'type' => 'xsd:string'),
-            'preco' => array('name' => 'preco', 'type' => 'xsd:string'),
-            'ficheiro' => array('name' => 'file', 'type' => 'xsd:string'),
-            'data' => array('name' => 'data', 'type' => 'xsd:string')
-        )
-    );
-
-    $server->wsdl->addComplexType(
-        'books',
-        'complexType',
-        'array',
-        '',
-        'SOAP-ENC:Array',
-        array(),
-        array(
-            array(
-                'ref' => 'SOAP-ENC:arrayType',
-                'wsdl:arrayType' => 'tns:file[]'
-            )
+            "token" => "xsd:string", 
+            "origem" => "xsd:int", 
+            "destino" => "xsd:int", 
+            "valor" => "xsd:double", 
         ),
-        'tns:file'
-    );
-
-    $server->register("files",
-        array("token" => "xsd:string"),
-        array("return" => "tns:books"),
+        array("return" => "xsd:int"),
         $ns,
         "",
         "",
         "",
-        "get list of files"
+        "get reference from transation"
     );
     
     $server->register("getToken",
-        array("username" => "xsd:string"),
+        array("code" => "xsd:string"),
         array("return" => "xsd:string"),
         $ns,
         "",
@@ -105,18 +68,6 @@
         "get token from User"
     );
 
-    $server->register("hello",
-        array(),
-        array("return" => "xsd:string"),
-        $ns,
-        "",
-        "",
-        "",
-        "say hi to the caller"
-    );
-
     $server->service(file_get_contents("php://input"));
 
-    // $result = getToken('edvaldo');
-    // print_r($result);
 ?>

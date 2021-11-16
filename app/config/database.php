@@ -6,8 +6,8 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	// 'hostname' => 'localhost:3307',
-	'hostname' => '127.0.0.1',
+	'hostname' => 'localhost:3307',
+	// 'hostname' => '127.0.0.1',
 	'username' => 'edvaldo',
 	'password' => 'vander',
 	'database' => 'bancos',

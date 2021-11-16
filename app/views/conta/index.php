@@ -11,8 +11,8 @@
                     <thead>
                         <tr>
                             <th>Nome</th>
-                            <th>Sigla</th>
-                            <th>Administrador</th>
+                            <th>Banco</th>
+                            <th>Conta</th>
                             <th>Criado em</th>
                             <th>Actualizado em</th>
                             <th class="text-right">Acção</th>
@@ -23,9 +23,9 @@
                     <tbody>
 					<?php foreach ($items as $item): ?>
                         <tr>
+                            <td> <?= $item->first_name?> </td>
                             <td> <?= $item->nome?> </td>
-                            <td> <?= $item->sigla?> </td>
-                            <td> <?= $item->admin?> </td>
+                            <td> <?= $item->conta?> </td>
                             <td> <?= $item->created_at?> </td>
                             <td> <?= $item->updated_at?> </td>
                             <td class="text-right">
@@ -55,6 +55,7 @@
 </div>
 <!-- end row-->
 
-<?php require('_new.php'); ?>
 
+
+<?php require('_new.php'); ?>
 
