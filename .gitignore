@@ -15,6 +15,7 @@ application/logs/*
 !application/logs/index.html
 !application/logs/.htaccess
 
+.DS_Store
 
 /vendor/
 /uploads/ficheiros/*
