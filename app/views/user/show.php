@@ -28,24 +28,24 @@
             <div class="card-body">
                 <div class="row m-0 p-1">
                     <div class="col-sm-6">
-                        <strong>Nome : </strong> <?= $item->first_name ?>
+                        <strong>Nome : </strong> <?= $item->first_name; ?>
                     </div> <!-- end col -->
 
                     <div class="col-sm-6">
-                        <!-- <strong>Nome : </strong> <?# $item->nome ?> -->
+                        <strong>Nome : </strong> <?= $item->username ?>
                     </div> <!-- end col -->
                 </div> 
-                <!-- end row -->
             </div>
             
             <div class="card-footer">
-                <div class="d-flex align-items-center justify-content-between m-0 p-0">
+                <div class="d-flex align-items-center justify-content-end m-0 p-0">
                     <div>
-                        <strong>Criado em : </strong> <?= $item->created_at ?>
+                        <strong>Criado em: </strong> <?= $item->created_at ?> 
                     </div>
+                    <span> - </span>
                     <div>
                     <?php if($item->updated_at) { ?>
-                        <strong>Criado em : </strong> <?= $item->updated_at ?>
+                        <strong> Actualizado em: </strong> <?= $item->updated_at ?>
                     <?php } ?>
                     </div>
                 </div>

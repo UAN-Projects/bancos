@@ -12,6 +12,10 @@ class Dashboard extends BaseController {
 
 	public function index()
 	{
+		$this->data['bancos'] = $this->Core_model->get('bancos');
+		$this->data['contas'] = $this->Core_model->get('contas');
+		$this->data['utilizadores'] = $this->Core_model->get('users');
+		$this->data['movimentos'] = $this->Core_model->get('movimentos');
 		$this->data['method'] = __FUNCTION__;
 		$this->load->view('layout', $this->data);
 	}

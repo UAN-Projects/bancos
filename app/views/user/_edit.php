@@ -14,10 +14,6 @@
                       <label for="fullname">Nome</label>
                       <?= form_input( array('name' => 'first_name', 'type' => 'text', 'id' => 'first_name', 'placeholder' => "Nome", 'required' => '', 'class' => 'form-control', ), set_value('first_name', $item->first_name));?>
                   </div>
-                  <div class="form-group">
-                      <label for="fullname">Telefone</label>
-                      <?= form_input( array('name' => 'phone', 'type' => 'text', 'id' => 'phone', 'placeholder' => "example@company.com", 'required' => '', 'class' => 'form-control', ), set_value('phone', $item->phone));?>
-                  </div>
               </div>
               <div class="modal-footer">
                   <div class="text-right">

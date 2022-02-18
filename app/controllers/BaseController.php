@@ -7,8 +7,9 @@ class BaseController extends CI_Controller {
     public function __construct() {
         parent::__construct();
         $this->load->model('Core_model');
-        $this->data['isAdmin'] = !$this->ion_auth->is_admin();
         $this->data['AppName'] = 'Bancos';
+        $this->data['isAdmin'] = !$this->ion_auth->is_admin();
+        $this->data['user_corrent'] = $this->ion_auth->get_user_id();
     }
 
 }

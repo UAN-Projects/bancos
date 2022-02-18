@@ -56,14 +56,11 @@
                       <div class="dropdown-menu dropdown-menu-right profile-dropdown ">
 
                           <!-- item-->
-                          <a href="javascript:void(0);" class="dropdown-item notify-item">
+                          <a href="<?= base_url("user/show/$user_corrent"); ?>" class="dropdown-item notify-item">
                               <i class="remixicon-account-circle-line"></i>
                               <span>Perfil</span>
                           </a>
-                          <a href="<?= base_url('user/generateTokenApp'); ?>" class="dropdown-item notify-item">
-                              <i class="remixicon-account-circle-line"></i>
-                              <span>Gerer Token</span>
-                          </a>
+
                           <div class="dropdown-divider"></div>
 
                           <!-- item-->
@@ -117,9 +114,6 @@
                                 <ul class="submenu">
                                     <li>
                                         <a href="<?= base_url('user'); ?>">Utilizadores</a>
-                                    </li>
-                                    <li>
-                                        <a href="<?= base_url('permissoes'); ?>">Permissões</a>
                                     </li>
                                 </ul>
                             </li>

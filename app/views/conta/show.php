@@ -63,7 +63,6 @@
     </div> <!-- end col -->
 </div>
 
-
 <div class="row">
     <div class="col-12">
         <div class="card">
@@ -106,9 +105,5 @@
 </div>
 <!-- end row-->
 
-
-<pre class="text-primary">
-    <?= print_r($movimentos) ?>
-</pre>
 
 <?php require('_edit.php'); ?>
