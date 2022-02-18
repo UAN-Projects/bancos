@@ -99,6 +99,12 @@
               <div id="navigation">
                   <!-- Navigation Menu-->
                   <ul class="navigation-menu">
+
+                    <li class="has-submenu">
+                        <a href="<?= base_url(); ?>">
+                            <i class="remixicon-dashboard-line"></i>Dashboard <div class="arrow-down"></div>
+                        </a>
+                    </li>
                   
                   <?php if(!$isAdmin) { ?>
                     <li class="has-submenu">
@@ -120,12 +126,6 @@
                         </ul>
                     </li>
                   <?php } ?>
-
-                      <li class="has-submenu">
-                            <a href="<?= base_url(); ?>">
-                                <i class="remixicon-dashboard-line"></i>Dashboard <div class="arrow-down"></div>
-                            </a>
-                      </li>
 
                       <li class="has-submenu">
                           <a href="#">
@@ -176,13 +176,11 @@
       <div class="container-fluid">
           <div class="row">
               <div class="col-md-6">
-                  2016 - 2019 &copy; Minton theme by <a href="#">Coderthemes</a> 
+                  2020 &copy; Todos direitos reservados 
               </div>
               <div class="col-md-6">
                   <div class="text-md-right footer-links d-none d-sm-block">
-                      <a href="javascript:void(0);">About Us</a>
-                      <a href="javascript:void(0);">Help</a>
-                      <a href="javascript:void(0);">Contact Us</a>
+                      <a href="javascript:void(0);">EEGT</a>
                   </div>
               </div>
           </div>
