@@ -63,9 +63,6 @@
     </div> <!-- end col -->
 </div>
 
-<?#= print_r($item); ?>
-<?= print_r($movimentos); ?>
-
 <div class="row">
     <div class="col-12">
         <div class="card">
