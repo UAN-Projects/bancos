@@ -38,10 +38,10 @@ class Conta extends BaseController
         $this->load->view('layout', $this->data);
     }
 
-	public function show($id) {
+	public function show($id, $conta) {
         $this->data['method'] = __FUNCTION__;
         $this->data['item'] = $this->Core_model->getContas(array('contas.id' => $id));
-        $this->data['movimentos'] = $this->Core_model->getMovimentosByConta($id);
+        $this->data['movimentos'] = $this->Core_model->getMovimentosByConta($conta);
         $this->load->view('layout', $this->data);
 	}
 

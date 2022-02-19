@@ -110,6 +110,31 @@ class Core_model extends CI_Model {
         return ($conta)? $conta->conta_numero + 1 : 1;
     }
 
+    public function getMovimentosByConta($conta) {
+
+        $movimentacoes = [];
+        $movimentos = $this->db->get('movimentos')->result();
+
+        foreach ($movimentos as $movimento) {
+
+            if($movimento->conta_origem == $conta || $movimento->conta_destino == $conta) {
+
+                $contaOrigem = $this->getContas(array('contas.conta' => $movimento->conta_origem));
+                $contaDestino = $this->getContas(array('contas.conta' => $movimento->conta_destino));
+
+                array_push($movimentacoes,array(
+                    'banco_origem' => $contaOrigem->nome,
+                    'conta_origem' => $contaOrigem->conta,
+                    'valor' => $movimento->valor,
+                    'banco_destino' => $contaDestino->nome,
+                    'conta_destino' => $contaDestino->conta,
+                    'data' => $movimento->created_at,
+                ));
+            }
+        }
+        return $movimentacoes;
+    }
+
     public function getContas($condicao = NULL) {
         $this->db->select('users.first_name, bancos.nome, contas.conta, contas.valor, contas.id, contas.created_at, contas.updated_at');
         $this->db->from('bancos');
@@ -119,13 +144,4 @@ class Core_model extends CI_Model {
         return $this->db->get()->result();
     }
 
-    public function getMovimentosByConta($contaId) {
-        $this->db->select('movimentos.conta_destino, users.first_name, bancos.nome, contas.conta, movimentos.valor, movimentos.id, contas.created_at');
-        $this->db->from('movimentos');
-        $this->db->join('contas', 'movimentos.conta_destino = contas.conta');
-        $this->db->join('bancos', 'bancos.id = contas.banco_id');
-        $this->db->join('users', 'users.id = contas.user_id');
-        $this->db->where(array('contas.id' => $contaId));
-        return $this->db->get()->result();
-    }
 }

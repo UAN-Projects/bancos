@@ -63,6 +63,9 @@
     </div> <!-- end col -->
 </div>
 
+<?#= print_r($item); ?>
+<?= print_r($movimentos); ?>
+
 <div class="row">
     <div class="col-12">
         <div class="card">
@@ -72,10 +75,8 @@
                     <thead>
                         <tr>
                             <th>Banco origem</th>
-                            <th>Nome origem</th>
                             <th>Conta origem</th>
                             <th>Montante</th>
-                            <th>Nome destino</th>
                             <th>Conta destino</th>
                             <th>Banco destino</th>
                             <th>realizado em</th>
@@ -86,14 +87,12 @@
                     <tbody>
 					<?php foreach ($movimentos as $movimento): ?>
                         <tr>
-                            <td> <?= $item->nome?> </td>
-                            <td> <?= $item->first_name?> </td>
-                            <td> <?= $item->conta?> </td>
-                            <td> <?= $movimento->valor?> </td>
-                            <td> <?= $movimento->first_name?> </td>
-                            <td> <?= $movimento->conta?> </td>
-                            <td> <?= $movimento->nome?> </td>
-                            <td> <?= $movimento->created_at?> </td>
+                            <td> <?= $movimento['banco_origem'] ?> </td>
+                            <td> <?= $movimento['conta_origem'] ?> </td>
+                            <td> <?= $movimento['valor'] ?> </td>
+                            <td> <?= $movimento['banco_destino'] ?> </td>
+                            <td> <?= $movimento['conta_destino'] ?> </td>
+                            <td> <?= $movimento['data'] ?> </td>
                         </tr>
 					<?php endforeach;  ?>
                     </tbody>
@@ -103,7 +102,5 @@
         </div> <!-- end card -->
     </div><!-- end col-->
 </div>
-<!-- end row-->
-
 
 <?php require('_edit.php'); ?>

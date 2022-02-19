@@ -39,7 +39,7 @@
 									> Acções
 									</button>
 									<div class="dropdown-menu">
-										<a class="dropdown-item" href="<?= base_url("$class/show/$item->id"); ?>">Visualizar</a>
+										<a class="dropdown-item" href="<?= base_url("$class/show/$item->id/$item->conta"); ?>">Visualizar</a>
 										<a class="dropdown-item text-danger" href="<?= base_url("$class/delete/$item->id"); ?>">Eliminar</a>
 									</div>
 								</div>
